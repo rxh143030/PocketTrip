@@ -165,7 +165,7 @@ class FunHomeScreen extends React.Component {
                    width: Dimensions.get('window').width/2,
                    height: Dimensions.get('window').height/2,
                  }}
-                 source={{uri: 'https://zzoob.com/wp-content/uploads/2017/08/585be1aa1600002400bdf2a6.jpeg'}}
+                 source={{uri: 'https://i.imgur.com/dmQ0Tm3.png'}}
                />
              </TouchableOpacity>
            </View>
@@ -181,7 +181,7 @@ class FunHomeScreen extends React.Component {
                  height: Dimensions.get('window').height/2,
                  overflow: "hidden"
                }}
-               source={{uri: 'https://zzoob.com/wp-content/uploads/2017/08/585be1aa1600002400bdf2a6.jpeg'}}
+               source={{uri: 'https://i.imgur.com/U2VDQd6.png'}}
              />
              </TouchableOpacity>
            </View>
