@@ -276,9 +276,7 @@ class FutureHomeScreen extends React.Component {
    const { navigate } = this.props.navigation;
    return (
    <View style={styles.overall}>
-
      <View style={styles.futureContainer}>
-
        <View>
          <TouchableOpacity
            style={styles.VocabButton}
@@ -290,10 +288,9 @@ class FutureHomeScreen extends React.Component {
             color='#FFFFFF'
             size={40}
            />
-           <Text style={styles.words}>Daily Vocab</Text>
+           <Text style={styles.words}>Vocab</Text>
          </TouchableOpacity>
        </View>
-
        <View>
          <TouchableOpacity
            style={styles.NewsButton}
@@ -308,11 +305,8 @@ class FutureHomeScreen extends React.Component {
            <Text style={styles.words}> News </Text>
          </TouchableOpacity>
        </View>
-
      </View>
-
      <View style={styles.futureContainer}>
-
        <View>
          <TouchableOpacity
            style={styles.MoneyButton}
@@ -327,7 +321,6 @@ class FutureHomeScreen extends React.Component {
            <Text style={styles.words}> Money </Text>
          </TouchableOpacity>
        </View>
-
        <View>
          <TouchableOpacity
            style={styles.CultureButton}
@@ -342,9 +335,7 @@ class FutureHomeScreen extends React.Component {
            <Text style={styles.words}> Culture </Text>
          </TouchableOpacity>
        </View>
-
      </View>
-
    </View>
  );
  }
@@ -404,32 +395,40 @@ const styles = StyleSheet.create({
   },
 
   button1: {
+   backgroundColor: '#FF8847',
    alignItems: 'center',
    justifyContent: 'center',
    opacity: 1,
    width: Dimensions.get('window').width/2,
    height: Dimensions.get('window').height/2,
+    paddingBottom: 40,
   },
    button2: {
+     backgroundColor: '#DC4C4F',
      alignItems: 'center',
      justifyContent: 'center',
      opacity: 1,
      width: Dimensions.get('window').width/2,
      height: Dimensions.get('window').height/2,
+      paddingBottom: 40,
   },
    button3: {
+     backgroundColor: '#3993A3',
      alignItems: 'center',
      justifyContent: 'center',
      opacity: 1,
      width: Dimensions.get('window').width/2,
      height: Dimensions.get('window').height/2,
+      paddingBottom: 40,
   },
    button4: {
+     backgroundColor: '#007791',
      alignItems: 'center',
      justifyContent: 'center',
      opacity: 1,
      width: Dimensions.get('window').width/2,
      height: Dimensions.get('window').height/2,
+      paddingBottom: 40,
   },
     overall: {
      flex: 1,
@@ -453,8 +452,6 @@ const styles = StyleSheet.create({
      justifyContent: 'center',
      alignItems: 'center',
      paddingBottom: 40,
-     borderColor: '#FFFFFF',
-     borderWidth: .5,
    },
 
    NewsButton: {
@@ -464,8 +461,7 @@ const styles = StyleSheet.create({
      justifyContent: 'center',
      alignItems: 'center',
      paddingBottom: 40,
-     borderColor: '#FFFFFF',
-     borderWidth: .5,
+
    },
 
    MoneyButton: {
@@ -475,8 +471,7 @@ const styles = StyleSheet.create({
      justifyContent: 'center',
      alignItems: 'center',
      paddingBottom: 40,
-     borderColor: '#FFFFFF',
-     borderWidth: .5,
+
    },
 
    CultureButton: {
@@ -486,8 +481,7 @@ const styles = StyleSheet.create({
      justifyContent: 'center',
      alignItems: 'center',
      paddingBottom: 40,
-     borderColor: '#FFFFFF',
-     borderWidth: .5,
+
    },
 
    words: {
