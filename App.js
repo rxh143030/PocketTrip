@@ -22,21 +22,21 @@ import {
   FormInput,
   Icon,
   Tile
-} from 'react-native-elements'
+} from 'react-native-elements';
 
 import { Dropdown } from 'react-native-material-dropdown';
 
-// Icons
-// Future - List
-// Fun - glass-mug
-//
+const country = null;
 
-const lat = 0;
-const long = 0;
-const googleMapsKey = 'AIzaSyBnhgAyyZ-clR757snstHOJyIXMhh-ydNs';
-const googleReverseHtml = 'https://maps.googleapis.com/maps/api/geocode/json?latlng='
- + lat + ',' + long + '&key=' + googleMapsKey;
 
+const colorTable = {
+  red: '#DC4C4F',
+  lightBlue: '#3993A3',
+  blue: '#007791',
+  orange: '#FF8847'
+};
+
+const colorArray = Object.keys(colorTable);
 
 class SearchScreen extends React.Component {
 
@@ -50,19 +50,13 @@ class SearchScreen extends React.Component {
   }
 
   componentDidMount(){
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        this.setState({
-          error: null,
-        });
-        lat = position.coords.latitude;
-        long = position.coords.longitude;
-        googleReverseHtml = 'https://maps.googleapis.com/maps/api/geocode/json?latlng='
-         + lat + ',' + long + '&key=' + googleMapsKey;
-      },
-      (error) => this.setState({ error: error.message }),
-      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
-    );
+    fetch('https://freegeoip.net/json/')
+      .then((response) => response.json())
+      .then((responseJSON) => {
+        country = responseJSON.country_code
+      }).catch((error) => {
+        console.error(error);
+      });
   }
 
   static navigationOptions = {
@@ -237,7 +231,7 @@ class FutureHomeScreen extends React.Component {
             color='#FFFFFF'
             size={40}
            />
-           <Text style={styles.words}>Vocab</Text>
+           <Text style={styles.words}>Daily Vocab</Text>
          </TouchableOpacity>
        </View>
 
@@ -307,7 +301,8 @@ class VocabScreen extends React.Component {
           alignItems: 'center',
         }}
       >
-        <Text>Vocab</Text>
+        <Text>Country</Text>
+        <Text>{country}</Text>
       </View>
     );
   }
