@@ -1,4 +1,5 @@
 import React from 'react';
+
 import {
   StyleSheet,
   Text,
@@ -9,10 +10,24 @@ import {
   Button,
   Picker
 } from 'react-native';
+
 import {
   StackNavigator,
   TabNavigator,
 } from 'react-navigation';
+
+import {
+  FormLabel,
+  FormInput,
+  Icon
+} from 'react-native-elements'
+
+import { Dropdown } from 'react-native-material-dropdown';
+
+// Icons
+// Future - List
+// Fun - glass-mug
+//
 
 class SearchScreen extends React.Component {
 
@@ -24,24 +39,50 @@ class SearchScreen extends React.Component {
     };
   }
 
-  render() {
-    return(
-      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-        <Text>Enter Airline</Text>
-        <Picker
+  static navigationOptions = {
+    tabBarIcon: () => (
+      <Icon
+      name='search'
+      type='feather'
+      color='#517fa4'
+      />
+   )
+  };
 
-        >
-        </Picker>
-        <Text>Enter Flight no.</Text>
-        <TextInput
-          placeholder="1234"
+  render() {
+    let airlines = [
+      {value: 'American'},
+      {value: 'South Western'},
+    ];
+
+    return(
+      <View style={{flex: 1, justifyContent: 'center'}}>
+        <FormLabel>Enter Airlines</FormLabel>
+        <Dropdown
+          label='Airlines'
+          data={airlines}
+          containerStyle={{paddingLeft: 21, paddingRight: 21}}
         />
+        <FormLabel>Enter Flight No.</FormLabel>
+        <FormInput Title="1234"/>
       </View>
     );
   }
 }
 
 class FlightScreen extends React.Component {
+
+  static navigationOptions = {
+    tabBarIcon: () => (
+      <Icon
+        name='sc-telegram'
+        type='evilicon'
+        color='#517fa4'
+        size= {33}
+      />
+   )
+  };
+
   render() {
     return(
       <View
@@ -305,5 +346,6 @@ const tabNavigator = TabNavigator({
     screen: FutureStack
   },
 });
+
 
 export default tabNavigator;
