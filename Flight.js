@@ -1,7 +1,7 @@
 import React from 'react';
 import { Alert, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-export default class App extends React.Component {
+export default class flight extends React.Component {
 	onPress = () => {
 		Alert.alert('Button pressed');
 	}
@@ -30,25 +30,25 @@ export default class App extends React.Component {
 					</View>
 				</View>
 				<View style = {styles.flightButtonsContainer}>
-					<TouchableOpacity 
+					<TouchableOpacity
 						style = {styles.flightButton}
 						onPress = {this.onPress}
 					>
 						<Text style = {styles.flightButtonText}>Upgrades</Text>
 					</TouchableOpacity>
-					<TouchableOpacity 
+					<TouchableOpacity
 						style = {styles.flightButton}
 						onPress = {this.onPress}
 					>
 						<Text style = {styles.flightButtonText}>Luggage</Text>
 					</TouchableOpacity>
-					<TouchableOpacity 
+					<TouchableOpacity
 						style = {styles.flightButton}
 						onPress = {this.onPress}
 					>
 						<Text style = {styles.flightButtonText}>Checklist</Text>
 					</TouchableOpacity>
-					<TouchableOpacity 
+					<TouchableOpacity
 						style = {styles.flightButton}
 						onPress = {this.onPress}
 					>
@@ -103,5 +103,3 @@ const styles = StyleSheet.create({
 		fontSize: 20,
 	},
 });
-
-

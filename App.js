@@ -1,6 +1,7 @@
 import React from 'react';
 
 import {
+  Alert,
   StyleSheet,
   Text,
   View,
@@ -24,10 +25,18 @@ import {
   Tile
 } from 'react-native-elements';
 
+import {
+  PowerTranslator,
+  ProviderTypes,
+  Translation
+} from 'react-native-power-translator';
+
 import { Dropdown } from 'react-native-material-dropdown';
 
-const country = null;
+const GoogleKey = 'AIzaSyDsJOF_vQs0iu0qVXAaKUZ8NkCagbUvh2A';
 
+const country = null;
+const lang = null;
 
 const colorTable = {
   red: '#DC4C4F',
@@ -50,13 +59,15 @@ class SearchScreen extends React.Component {
   }
 
   componentDidMount(){
+
     fetch('https://freegeoip.net/json/')
       .then((response) => response.json())
       .then((responseJSON) => {
         country = responseJSON.country_code
       }).catch((error) => {
-        console.error(error);
-      });
+        console.error(error).done();
+      }).done();
+
   }
 
   static navigationOptions = {
@@ -102,9 +113,9 @@ class SearchScreen extends React.Component {
   }
 }
 
-class FlightScreen extends React.Component {
+class flight extends React.Component {
 
-  static navigationOptions = {
+	static navigationOptions = {
     tabBarIcon: () => (
       <Icon
         name='sc-telegram'
@@ -115,23 +126,68 @@ class FlightScreen extends React.Component {
    )
   };
 
+	onPress = () => {
+		Alert.alert('Button pressed');
+	}
+
   render() {
-    return(
-      <View
-        style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}
-      >
-        <Text>Flight Screen</Text>
+    return (
+      <View style={styles.container}>
+				<View style = {styles.flightDetails}>
+					<View style = {styles.aFlight}>
+						<View style = {styles.toFrom}>
+							<Text style = {styles.toFromText}>From</Text>
+						</View>
+						<View style = {styles.aTerminal}>
+							<Text style = {styles.aTerminalText}>ORD Terminal 5</Text>
+							<Text style = {styles.aTerminalText}>5:34pm Sat Jan 27</Text>
+						</View>
+					</View>
+					<View style = {styles.aFlight}>
+						<View style = {styles.toFrom}>
+							<Text style = {styles.toFromText}>To</Text>
+						</View>
+						<View style = {styles.aTerminal}>
+							<Text style = {styles.aTerminalText}>CDG Terminal 2E</Text>
+							<Text style = {styles.aTerminalText}>8:18am Sun Jan 28</Text>
+						</View>
+					</View>
+				</View>
+				<View style = {styles.flightButtonsContainer}>
+					<TouchableOpacity
+						style = {styles.flightButton}
+						onPress = {this.onPress}
+					>
+						<Text style = {styles.flightButtonText}>Upgrades</Text>
+					</TouchableOpacity>
+					<TouchableOpacity
+						style = {styles.flightButton}
+						onPress = {this.onPress}
+					>
+						<Text style = {styles.flightButtonText}>Luggage</Text>
+					</TouchableOpacity>
+					<TouchableOpacity
+						style = {styles.flightButton}
+						onPress = {this.onPress}
+					>
+						<Text style = {styles.flightButtonText}>Checklist</Text>
+					</TouchableOpacity>
+					<TouchableOpacity
+						style = {styles.flightButton}
+						onPress = {this.onPress}
+					>
+						<Text style = {styles.flightButtonText}>Yeet</Text>
+					</TouchableOpacity>
+				</View>
       </View>
     );
   }
 }
 
 class FunHomeScreen extends React.Component {
-
  render() {
   const{navigate}=this.props.navigation;
    return (
-
      <View style={styles.column}>
        <View style={styles.row}>
            <View>
@@ -141,26 +197,26 @@ class FunHomeScreen extends React.Component {
                  navigate('Food')
                }
              >
-                <Image
-                  style={{
-                    width: Dimensions.get('window').width/2,
-                    height: Dimensions.get('window').height/2,
-                  }}
-                  source={{uri: 'https://zzoob.com/wp-content/uploads/2017/08/585be1aa1600002400bdf2a6.jpeg'}}
-                />
+             <Icon
+              name='food'
+              type='material-community'
+              color='#FFFFFF'
+              size={40}
+             />
+             <Text style={styles.words}>Food</Text>
             </TouchableOpacity>
            </View>
            <View>
              <TouchableOpacity
               style={styles.button2}
              >
-               <Image
-                 style={{
-                   width: Dimensions.get('window').width/2,
-                   height: Dimensions.get('window').height/2,
-                 }}
-                 source={{uri: 'https://i.imgur.com/dmQ0Tm3.png'}}
-               />
+             <Icon
+              name='shop'
+              type='entypo'
+              color='#FFFFFF'
+              size={40}
+             />
+             <Text style={styles.words}>Shopping</Text>
              </TouchableOpacity>
            </View>
        </View>
@@ -169,28 +225,31 @@ class FunHomeScreen extends React.Component {
              <TouchableOpacity
              style = {styles.button3}
              >
-             <Image
-               style={{
-                 width: Dimensions.get('window').width/2,
-                 height: Dimensions.get('window').height/2,
-                 overflow: "hidden"
-               }}
-               source={{uri: 'https://i.imgur.com/U2VDQd6.png'}}
+             <Icon
+              name='bucket'
+              type='entypo'
+              color='#FFFFFF'
+              size={40}
              />
+             <Text style={styles.words}>Activities</Text>
              </TouchableOpacity>
            </View>
-
            <View>
                <TouchableOpacity
                 style={styles.button4}
                >
-
+               <Icon
+                name='map'
+                type='entypo'
+                color='#FFFFFF'
+                size={40}
+               />
+               <Text style={styles.words}>'Map'</Text>
                </TouchableOpacity>
            </View>
-
        </View>
      </View>
-       );
+   );
  }
 }
 
@@ -292,7 +351,26 @@ class FutureHomeScreen extends React.Component {
 }
 
 class VocabScreen extends React.Component {
+
+  componentDidMount(){
+
+    var url = 'https://restcountries.eu/rest/v2/alpha/' + country;
+
+    fetch('https://restcountries.eu/rest/v2/alpha/US')
+      .then((response) => response.json())
+      .then((responseJSON) => {
+        this.setState({
+          country: responseJSON.languages[0].iso639_1,
+        })
+      }).catch((error) => {
+        console.error(error);
+      });
+  }
+
   render(){
+
+    Translation.setConfig(ProviderTypes.Google, GoogleKey ,'fr');
+
     return(
       <View
         style={{
@@ -302,7 +380,8 @@ class VocabScreen extends React.Component {
         }}
       >
         <Text>Country</Text>
-        <Text>{country}</Text>
+        <Text>{lang}</Text>
+        <PowerTranslator text={'Hello'} />
       </View>
     );
   }
@@ -414,6 +493,47 @@ const styles = StyleSheet.create({
    words: {
      color: 'white'
    },
+   container: {
+     flex: 1,
+ 		paddingTop: 50,
+     backgroundColor: '#fff',
+   },
+ 	flightDetails:{
+ 		flex: 1,
+ 	},
+ 	aFlight:{
+ 		justifyContent: 'space-between',
+ 		flexDirection: 'row',
+ 		flex:1,
+ 	},
+ 	aTerminal:{
+ 	},
+ 	aTerminalText:{
+ 		paddingTop: 5,
+ 		fontSize: 20,
+ 	},
+ 	toFrom:{
+ 	},
+ 	toFromText:{
+ 		fontWeight: 'bold',
+ 		fontSize: 60,
+ 		color: '#e5b3fc',
+ 	},
+ 	flightButtonsContainer:{
+ 		paddingBottom: 100,
+ 		justifyContent: 'space-around',
+ 		flex: 1,
+ 	},
+ 	flightButton:{
+ 		paddingTop: 10,
+ 		paddingBottom: 10,
+ 		alignItems: 'center',
+ 		backgroundColor: '#e5b3fc',
+ 	},
+ 	flightButtonText:{
+ 		fontWeight: 'bold',
+ 		fontSize: 20,
+ 	},
 
 });
 
@@ -440,7 +560,7 @@ const tabNavigator = TabNavigator({
     screen: SearchScreen
   },
   Flight: {
-    screen: FlightScreen
+    screen: flight
   },
   Fun: {
     screen: FunStack,
