@@ -8,7 +8,8 @@ import {
   TouchableOpacity,
   Dimensions,
   Button,
-  Picker
+  Picker,
+  Image
 } from 'react-native';
 
 import {
@@ -19,7 +20,8 @@ import {
 import {
   FormLabel,
   FormInput,
-  Icon
+  Icon,
+  Tile
 } from 'react-native-elements'
 
 import { Dropdown } from 'react-native-material-dropdown';
@@ -29,6 +31,13 @@ import { Dropdown } from 'react-native-material-dropdown';
 // Fun - glass-mug
 //
 
+const lat = 0;
+const long = 0;
+const googleMapsKey = 'AIzaSyBnhgAyyZ-clR757snstHOJyIXMhh-ydNs';
+const googleReverseHtml = 'https://maps.googleapis.com/maps/api/geocode/json?latlng='
+ + lat + ',' + long + '&key=' + googleMapsKey;
+
+
 class SearchScreen extends React.Component {
 
   constructor(props){
@@ -36,7 +45,24 @@ class SearchScreen extends React.Component {
 
     this.state = {
       Airlines: null,
+      error: null,
     };
+  }
+
+  componentDidMount(){
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        this.setState({
+          error: null,
+        });
+        lat = position.coords.latitude;
+        long = position.coords.longitude;
+        googleReverseHtml = 'https://maps.googleapis.com/maps/api/geocode/json?latlng='
+         + lat + ',' + long + '&key=' + googleMapsKey;
+      },
+      (error) => this.setState({ error: error.message }),
+      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
+    );
   }
 
   static navigationOptions = {
@@ -65,6 +91,18 @@ class SearchScreen extends React.Component {
         />
         <FormLabel>Enter Flight No.</FormLabel>
         <FormInput Title="1234"/>
+        <TouchableOpacity
+          style={{
+            alignItems: 'center',
+            backgroundColor: '#9E9E9E',
+            marginLeft: 21,
+            marginRight: 21,
+            marginTop: 30,
+            padding: 20
+          }}
+        >
+          <Text style={{color: "#FFFFFF"}}>SUBMIT</Text>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -109,31 +147,50 @@ class FunHomeScreen extends React.Component {
                  navigate('Food')
                }
              >
-                <Text>Hello</Text>
+                <Image
+                  style={{
+                    width: Dimensions.get('window').width/2,
+                    height: Dimensions.get('window').height/2,
+                  }}
+                  source={{uri: 'https://zzoob.com/wp-content/uploads/2017/08/585be1aa1600002400bdf2a6.jpeg'}}
+                />
             </TouchableOpacity>
            </View>
            <View>
-               <TouchableOpacity
-                style={styles.button2}
-               >
-               <Text >Hello2</Text>
-               </TouchableOpacity>
+             <TouchableOpacity
+              style={styles.button2}
+             >
+               <Image
+                 style={{
+                   width: Dimensions.get('window').width/2,
+                   height: Dimensions.get('window').height/2,
+                 }}
+                 source={{uri: 'https://zzoob.com/wp-content/uploads/2017/08/585be1aa1600002400bdf2a6.jpeg'}}
+               />
+             </TouchableOpacity>
            </View>
        </View>
        <View style={styles.row}>
            <View>
-               <TouchableOpacity
-               style = {styles.button3}
-               >
-               <Text >Hello3</Text>
-               </TouchableOpacity>
+             <TouchableOpacity
+             style = {styles.button3}
+             >
+             <Image
+               style={{
+                 width: Dimensions.get('window').width/2,
+                 height: Dimensions.get('window').height/2,
+                 overflow: "hidden"
+               }}
+               source={{uri: 'https://zzoob.com/wp-content/uploads/2017/08/585be1aa1600002400bdf2a6.jpeg'}}
+             />
+             </TouchableOpacity>
            </View>
 
            <View>
                <TouchableOpacity
                 style={styles.button4}
                >
-               <Text >Hello4</Text>
+
                </TouchableOpacity>
            </View>
 
@@ -163,6 +220,7 @@ class FoodScreen extends React.Component {
 
 class FutureHomeScreen extends React.Component {
  render() {
+   const { navigate } = this.props.navigation;
    return (
    <View style={styles.overall}>
 
@@ -171,9 +229,15 @@ class FutureHomeScreen extends React.Component {
        <View>
          <TouchableOpacity
            style={styles.VocabButton}
-           onPress={this.onPress}
+           onPress={() => navigate('Vocab')}
            >
-           <Text style={styles.words}> Vocab! </Text>
+           <Icon
+            name='book'
+            type='entypo'
+            color='#FFFFFF'
+            size={40}
+           />
+           <Text style={styles.words}>Vocab</Text>
          </TouchableOpacity>
        </View>
 
@@ -182,7 +246,13 @@ class FutureHomeScreen extends React.Component {
            style={styles.NewsButton}
            onPress={this.onPress}
            >
-           <Text style={styles.words}> News! </Text>
+           <Icon
+            name='newspaper-o'
+            type='font-awesome'
+            color='#FFFFFF'
+            size={40}
+           />
+           <Text style={styles.words}> News </Text>
          </TouchableOpacity>
        </View>
 
@@ -195,7 +265,13 @@ class FutureHomeScreen extends React.Component {
            style={styles.MoneyButton}
            onPress={this.onPress}
            >
-           <Text style={styles.words}> Money! </Text>
+           <Icon
+            name='attach-money'
+            type='materialicons'
+            color='#FFFFFF'
+            size={40}
+           />
+           <Text style={styles.words}> Money </Text>
          </TouchableOpacity>
        </View>
 
@@ -204,7 +280,13 @@ class FutureHomeScreen extends React.Component {
            style={styles.CultureButton}
            onPress={this.onPress}
            >
-           <Text style={styles.words}> Culture! </Text>
+           <Icon
+            name='fingerprint'
+            type='materialicons'
+            color='#FFFFFF'
+            size={40}
+           />
+           <Text style={styles.words}> Culture </Text>
          </TouchableOpacity>
        </View>
 
@@ -213,6 +295,22 @@ class FutureHomeScreen extends React.Component {
    </View>
  );
  }
+}
+
+class VocabScreen extends React.Component {
+  render(){
+    return(
+      <View
+        style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <Text>Vocab</Text>
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
@@ -232,7 +330,6 @@ const styles = StyleSheet.create({
   },
 
   button1: {
-   flex: 1,
    alignItems: 'center',
    justifyContent: 'center',
    opacity: 1,
@@ -240,7 +337,6 @@ const styles = StyleSheet.create({
    height: Dimensions.get('window').height/2,
   },
    button2: {
-     flex: 1,
      alignItems: 'center',
      justifyContent: 'center',
      opacity: 1,
@@ -248,7 +344,6 @@ const styles = StyleSheet.create({
      height: Dimensions.get('window').height/2,
   },
    button3: {
-     flex: 1,
      alignItems: 'center',
      justifyContent: 'center',
      opacity: 1,
@@ -256,7 +351,6 @@ const styles = StyleSheet.create({
      height: Dimensions.get('window').height/2,
   },
    button4: {
-     flex: 1,
      alignItems: 'center',
      justifyContent: 'center',
      opacity: 1,
@@ -279,40 +373,51 @@ const styles = StyleSheet.create({
    },
 
    VocabButton: {
-     backgroundColor: 'skyblue',
+     backgroundColor: '#DC4C4F',
      width: Dimensions.get('window').width/2,
      height: Dimensions.get('window').height/2,
      justifyContent: 'center',
      alignItems: 'center',
+     paddingBottom: 40,
+     borderColor: '#FFFFFF',
+     borderWidth: .5,
    },
 
    NewsButton: {
-     backgroundColor: 'red',
+     backgroundColor: '#FF8847',
      width: Dimensions.get('window').width/2,
      height: Dimensions.get('window').height/2,
      justifyContent: 'center',
      alignItems: 'center',
+     paddingBottom: 40,
+     borderColor: '#FFFFFF',
+     borderWidth: .5,
    },
 
    MoneyButton: {
-     backgroundColor: 'orange',
+     backgroundColor: '#007791',
      width: Dimensions.get('window').width/2,
      height: Dimensions.get('window').height/2,
      justifyContent: 'center',
      alignItems: 'center',
+     paddingBottom: 40,
+     borderColor: '#FFFFFF',
+     borderWidth: .5,
    },
 
    CultureButton: {
-     backgroundColor: 'yellow',
+     backgroundColor: '#3993A3',
      width: Dimensions.get('window').width/2,
      height: Dimensions.get('window').height/2,
      justifyContent: 'center',
      alignItems: 'center',
+     paddingBottom: 40,
+     borderColor: '#FFFFFF',
+     borderWidth: .5,
    },
 
    words: {
-     alignItems: 'center',
-     justifyContent: 'center',
+     color: 'white'
    },
 
 });
@@ -330,6 +435,9 @@ const FutureStack = StackNavigator({
   HomeScreen: {
     screen: FutureHomeScreen
   },
+  Vocab: {
+    screen: VocabScreen
+  },
 });
 
 const tabNavigator = TabNavigator({
@@ -340,10 +448,28 @@ const tabNavigator = TabNavigator({
     screen: FlightScreen
   },
   Fun: {
-    screen: FunStack
+    screen: FunStack,
+    navigationOptions: {
+      tabBarIcon: (
+        <Icon
+          name='glass-flute'
+          type='material-community'
+          color='#517fa4'
+          size={25}
+        />)
+    },
   },
   Future: {
-    screen: FutureStack
+    screen: FutureStack,
+    navigationOptions: {
+      tabBarIcon: (
+        <Icon
+          name='list'
+          type='feather'
+          color='#517fa4'
+          size={28}
+        />)
+    },
   },
 });
 
